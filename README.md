@@ -22,9 +22,6 @@
 * **AI Service:** OpenAI REST API
 * **Data Handling:** Newtonsoft.Json
 
-## 📸 Screenshots
-
-*(Add your screenshots here)*
 
 ##  How to Run
 
