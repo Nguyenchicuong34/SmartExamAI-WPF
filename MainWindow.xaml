@@ -1,0 +1,78 @@
+﻿<Window x:Class="SmartExamAI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="Smart Exam Generator" Height="650" Width="1000" WindowStartupLocation="CenterScreen">
+
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="329.694"/>
+            <ColumnDefinition Width="20.306"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <materialDesign:Card Grid.Column="0" Padding="15" VerticalAlignment="Top" UniformCornerRadius="10" Grid.ColumnSpan="2">
+            <StackPanel>
+                <TextBlock Text="Cấu Hình Đề Thi" Style="{StaticResource MaterialDesignHeadline5TextBlock}" Margin="0,0,0,20"/>
+
+                <TextBox x:Name="txtTopic" Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         materialDesign:HintAssist.Hint="Nhập chủ đề (VD: Mạng máy tính...)"
+                         Height="120" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Margin="0,0,0,20"/>
+
+                <TextBlock Text="Số lượng câu hỏi:" Margin="0,0,0,5"/>
+                <Grid Margin="0,0,0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Slider x:Name="sldCount" Minimum="1" Maximum="10" Value="3" TickFrequency="1" IsSnapToTickEnabled="True"/>
+                    <TextBlock Grid.Column="1" Text="{Binding ElementName=sldCount, Path=Value}" FontWeight="Bold" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="16"/>
+                </Grid>
+
+                <Button x:Name="btnGenerate" Content="TẠO ĐỀ THI NGAY" Height="50" Click="BtnGenerate_Click" materialDesign:ButtonAssist.CornerRadius="5"/>
+
+                <ProgressBar x:Name="progressBar" IsIndeterminate="True" Visibility="Hidden" Margin="0,20,0,0" Height="10"/>
+                <TextBlock x:Name="lblStatus" Text="Đang xử lý..." HorizontalAlignment="Center" Visibility="Hidden" Margin="0,5,0,0" FontStyle="Italic"/>
+            </StackPanel>
+        </materialDesign:Card>
+
+        <Border Grid.Column="3" Background="#F5F5F5" CornerRadius="10" Padding="10">
+            <ScrollViewer>
+                <ItemsControl x:Name="listQuestions">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <materialDesign:Card Margin="0,0,0,15" Padding="15" UniformCornerRadius="8">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Content}" FontWeight="Bold" FontSize="16" TextWrapping="Wrap" Margin="0,0,0,10"/>
+                                    <StackPanel Margin="10,0,0,10">
+                                        <RadioButton Content="{Binding Options[0]}" Margin="0,5"/>
+                                        <RadioButton Content="{Binding Options[1]}" Margin="0,5"/>
+                                        <RadioButton Content="{Binding Options[2]}" Margin="0,5"/>
+                                        <RadioButton Content="{Binding Options[3]}" Margin="0,5"/>
+                                    </StackPanel>
+                                    <Expander Header="Xem đáp án chi tiết">
+                                        <StackPanel Margin="10">
+                                            <TextBlock Text="{Binding CorrectAnswer}" Foreground="Green" FontWeight="Bold"/>
+                                            <TextBlock Text="{Binding Explanation}" FontStyle="Italic" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                                        </StackPanel>
+                                    </Expander>
+                                </StackPanel>
+                            </materialDesign:Card>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</Window>
